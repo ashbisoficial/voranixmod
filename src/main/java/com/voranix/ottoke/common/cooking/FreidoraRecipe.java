@@ -1,6 +1,7 @@
 package com.voranix.ottoke.common.cooking;
 
-import com.voranix.ottoke.common.registration.ModRecipes;
+import com.voranix.ottoke.common.registration.ModRecipeSerializers;
+import com.voranix.ottoke.common.registration.ModRecipeTypes;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -51,12 +52,12 @@ public class FreidoraRecipe implements Recipe<Container> {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return ModRecipes.FREIDORA_RECIPE_SERIALIZER.get();
+        return ModRecipeSerializers.FREIDORA.get();
     }
 
     @Override
     public RecipeType<?> getType() {
-        return ModRecipes.FREIDORA_RECIPE_TYPE.get();
+        return ModRecipeTypes.FREIDORA.get();
     }
 
     public int getCookingTime() {

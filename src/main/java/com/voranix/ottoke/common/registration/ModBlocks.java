@@ -2,8 +2,6 @@ package com.voranix.ottoke.common.registration;
 
 import com.voranix.ottoke.OttokeStreetFood;
 import com.voranix.ottoke.common.cooking.FreidoraBlock;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -14,12 +12,13 @@ import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Supplier;
 
+/**
+ * Registers Block instances only. BlockItems are a separate concern owned by {@link ModBlockItems},
+ * so this class never needs to know that some blocks are obtainable in inventories and others might not be.
+ */
 public final class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS =
             DeferredRegister.create(ForgeRegistries.BLOCKS, OttokeStreetFood.MODID);
-
-    public static final DeferredRegister<Item> ITEMS =
-            DeferredRegister.create(ForgeRegistries.ITEMS, OttokeStreetFood.MODID);
 
     public static final RegistryObject<Block> FREIDORA = registerBlock("freidora", FreidoraBlock::new);
     public static final RegistryObject<Block> CAJA_OTTOKE = registerBlock("caja_ottoke",
@@ -39,13 +38,10 @@ public final class ModBlocks {
     }
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> blockSupplier) {
-        RegistryObject<T> block = BLOCKS.register(name, blockSupplier);
-        ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
-        return block;
+        return BLOCKS.register(name, blockSupplier);
     }
 
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
-        ITEMS.register(eventBus);
     }
 }

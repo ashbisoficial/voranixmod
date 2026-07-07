@@ -1,7 +1,7 @@
 package com.voranix.ottoke.common.cooking;
 
 import com.voranix.ottoke.common.registration.ModBlockEntities;
-import com.voranix.ottoke.common.registration.ModRecipes;
+import com.voranix.ottoke.common.registration.ModRecipeTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -76,7 +76,7 @@ public class FreidoraBlockEntity extends BlockEntity implements MenuProvider {
         SimpleContainer container = new SimpleContainer(1);
         container.setItem(0, this.inventory.getStackInSlot(INPUT_SLOT));
         RecipeManager recipeManager = this.level.getRecipeManager();
-        return recipeManager.getRecipeFor(ModRecipes.FREIDORA_RECIPE_TYPE.get(), container, this.level);
+        return recipeManager.getRecipeFor(ModRecipeTypes.FREIDORA.get(), container, this.level);
     }
 
     private boolean canCraftOutput() {
