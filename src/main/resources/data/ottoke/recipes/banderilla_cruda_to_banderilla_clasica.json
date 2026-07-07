@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "ottoke:banderilla_cruda"
+    }
+  ],
+  "result": {
+    "item": "ottoke:banderilla_clasica",
+    "count": 1
+  }
+}

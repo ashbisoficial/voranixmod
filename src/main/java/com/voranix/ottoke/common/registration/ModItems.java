@@ -12,10 +12,13 @@ public final class ModItems {
             DeferredRegister.create(ForgeRegistries.ITEMS, OttokeStreetFood.MODID);
 
     public static final RegistryObject<Item> BANDERILLA_CRUDA = ITEMS.register("banderilla_cruda",
-            () -> new Item(new Item.Properties()));
+            () -> new Item(FoodRegistry.nonEdible()));
 
     public static final RegistryObject<Item> BANDERILLA_CLASICA = ITEMS.register("banderilla_clasica",
-            () -> new Item(new Item.Properties()));
+            () -> new Item(FoodRegistry.builder()
+                    .nutrition(8)
+                    .saturation(0.8f)
+                    .build()));
 
     private ModItems() {
     }

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "ottoke:masa"
+    }
+  ],
+  "result": {
+    "item": "ottoke:empanizado",
+    "count": 1
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "ottoke:freidora",
+  "input": {
+    "item": "ottoke:banderilla_cruda"
+  },
+  "result": {
+    "item": "ottoke:banderilla_clasica"
+  },
+  "cookingTime": 200
+}
