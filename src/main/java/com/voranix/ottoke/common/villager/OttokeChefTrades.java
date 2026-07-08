@@ -1,5 +1,6 @@
 package com.voranix.ottoke.common.villager;
 
+import com.voranix.ottoke.common.config.OttokeConfig;
 import com.voranix.ottoke.common.registration.ModItems;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -17,11 +18,11 @@ public class OttokeChefTrades {
     public static List<VillagerTrades.ItemListing> getTrades(int level) {
         return switch (level) {
             case 1 -> List.of(
-                    new SimpleTrade(new ItemStack(ModItems.BANDERILLA_CRUDA.get()), 12, 1, 16),
+                    new SimpleTrade(new ItemStack(ModItems.BANDERILLA_CRUDA.get()), OttokeConfig.CHEF_PRICE_BANDERILLA_CRUDA.get(), 1, 16),
                     new SimpleTrade(new ItemStack(Items.BREAD), 1, new ItemStack(ModItems.BANDERILLA_CLASICA.get()), 1, 16, 1, 0.05F)
             );
             case 2 -> List.of(
-                    new SimpleTrade(new ItemStack(ModItems.BANDERILLA_CLASICA.get()), 8, 2, 20)
+                    new SimpleTrade(new ItemStack(ModItems.BANDERILLA_CLASICA.get()), OttokeConfig.CHEF_PRICE_BANDERILLA_CLASICA.get(), 2, 20)
             );
             default -> List.of();
         };

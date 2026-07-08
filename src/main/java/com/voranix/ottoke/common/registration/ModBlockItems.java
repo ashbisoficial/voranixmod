@@ -29,6 +29,8 @@ public final class ModBlockItems {
     public static final RegistryObject<Item> BASURERO = registerBlockItem(ModBlocks.BASURERO);
     public static final RegistryObject<Item> MENU = registerBlockItem(ModBlocks.MENU);
     public static final RegistryObject<Item> CARTEL = registerBlockItem(ModBlocks.CARTEL);
+    public static final RegistryObject<Item> BANNER_OTTOKE = registerBlockItem(ModBlocks.BANNER_OTTOKE);
+    public static final RegistryObject<Item> CARTEL_LUMINOSO = registerBlockItem(ModBlocks.CARTEL_LUMINOSO);
 
     private ModBlockItems() {
     }

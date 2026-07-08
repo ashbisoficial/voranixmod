@@ -1,5 +1,6 @@
 package com.voranix.ottoke.common.cooking;
 
+import com.voranix.ottoke.common.cooking.system.SlotType;
 import com.voranix.ottoke.common.registration.ModBlocks;
 import com.voranix.ottoke.common.registration.ModMenuTypes;
 import net.minecraft.core.BlockPos;
@@ -11,9 +12,21 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.items.SlotItemHandler;
 
+/**
+ * Slots are added in visual order (ingredient, fuel, result), which is why this class keeps its own
+ * {@code *_MENU_SLOT} constants instead of reusing {@link FreidoraBlockEntity#INPUT_SLOT}/
+ * {@code FUEL_SLOT}/{@code OUTPUT_SLOT}: those describe positions in the underlying
+ * {@code ItemStackHandler}, not positions in this menu's slot list - the two only coincided by
+ * accident back when there were just two slots in the same order as the handler.
+ */
 public class FreidoraMenu extends AbstractContainerMenu {
+    private static final int INGREDIENT_MENU_SLOT = 0;
+    private static final int FUEL_MENU_SLOT = 1;
+    private static final int CONTAINER_SLOT_COUNT = 3;
+
     private final BlockPos pos;
     private final Level level;
     private final ContainerData data;
@@ -28,11 +41,22 @@ public class FreidoraMenu extends AbstractContainerMenu {
         this.level = level;
         this.data = blockEntity.getData();
 
-        this.addSlot(new SlotItemHandler(blockEntity.getInventory(), FreidoraBlockEntity.INPUT_SLOT, 56, 35));
-        this.addSlot(new SlotItemHandler(blockEntity.getInventory(), FreidoraBlockEntity.OUTPUT_SLOT, 116, 35) {
+        this.addSlot(new SlotItemHandler(blockEntity.getInventory(), FreidoraBlockEntity.INPUT_SLOT, 47, 24) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return false;
+                return SlotType.INPUT.allowsExternalInsert();
+            }
+        });
+        this.addSlot(new SlotItemHandler(blockEntity.getInventory(), FreidoraBlockEntity.FUEL_SLOT, 47, 52) {
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+                return SlotType.FUEL.allowsExternalInsert() && ForgeHooks.getBurnTime(stack, null) > 0;
+            }
+        });
+        this.addSlot(new SlotItemHandler(blockEntity.getInventory(), FreidoraBlockEntity.OUTPUT_SLOT, 116, 38) {
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+                return SlotType.OUTPUT.allowsExternalInsert();
             }
         });
 
@@ -70,15 +94,11 @@ public class FreidoraMenu extends AbstractContainerMenu {
             ItemStack slotStack = slot.getItem();
             itemStack = slotStack.copy();
 
-            if (index == FreidoraBlockEntity.OUTPUT_SLOT) {
-                if (!this.moveItemStackTo(slotStack, 2, 38, true)) {
+            if (index < CONTAINER_SLOT_COUNT) {
+                if (!this.moveItemStackTo(slotStack, CONTAINER_SLOT_COUNT, CONTAINER_SLOT_COUNT + 36, true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (index != FreidoraBlockEntity.INPUT_SLOT) {
-                if (!this.moveItemStackTo(slotStack, FreidoraBlockEntity.INPUT_SLOT, FreidoraBlockEntity.OUTPUT_SLOT + 1, false)) {
-                    return ItemStack.EMPTY;
-                }
-            } else if (!this.moveItemStackTo(slotStack, 2, 38, false)) {
+            } else if (!this.moveItemStackTo(slotStack, INGREDIENT_MENU_SLOT, FUEL_MENU_SLOT + 1, false)) {
                 return ItemStack.EMPTY;
             }
 

@@ -20,8 +20,39 @@ public final class ModCreativeTabs {
                     .title(Component.translatable("itemGroup.ottoke"))
                     .icon(() -> new ItemStack(ModItems.BANDERILLA_CRUDA.get()))
                     .displayItems((parameters, output) -> {
+                        output.accept(ModBlocks.FREIDORA.get());
+                        output.accept(ModBlocks.CAJA_OTTOKE.get());
+                        output.accept(ModBlocks.MOSTRADOR.get());
+                        output.accept(ModBlocks.CAJA_REGISTRADORA.get());
+                        output.accept(ModBlocks.BASURERO.get());
+                        output.accept(ModBlocks.MENU.get());
+                        output.accept(ModBlocks.CARTEL.get());
+                        output.accept(ModBlocks.BANNER_OTTOKE.get());
+                        output.accept(ModBlocks.CARTEL_LUMINOSO.get());
                         output.accept(ModItems.BANDERILLA_CRUDA.get());
                         output.accept(ModItems.BANDERILLA_CLASICA.get());
+                        output.accept(ModItems.BANDERILLA_PAPA_CRUDA.get());
+                        output.accept(ModItems.BANDERILLA_PAPA.get());
+                        output.accept(ModItems.BANDERILLA_PICANTE_CRUDA.get());
+                        output.accept(ModItems.BANDERILLA_PICANTE.get());
+                        output.accept(ModItems.BANDERILLA_MOZZARELLA_CRUDA.get());
+                        output.accept(ModItems.BANDERILLA_MOZZARELLA.get());
+                        output.accept(ModItems.BANDERILLA_PREMIUM_CRUDA.get());
+                        output.accept(ModItems.BANDERILLA_PREMIUM.get());
+                        output.accept(ModItems.COLA_OTTOKE.get());
+                        output.accept(ModItems.TE_DURAZNO.get());
+                        output.accept(ModItems.SODA_UVA.get());
+                        output.accept(ModItems.AGUA_MINERAL.get());
+                        output.accept(ModIngredients.HARINA.get());
+                        output.accept(ModIngredients.SAL.get());
+                        output.accept(ModIngredients.AZUCAR.get());
+                        output.accept(ModIngredients.ACEITE.get());
+                        output.accept(ModIngredients.LECHE.get());
+                        output.accept(ModIngredients.PALO.get());
+                        output.accept(ModIngredients.SALCHICHA.get());
+                        output.accept(ModIngredients.MASA.get());
+                        output.accept(ModIngredients.EMPANIZADO.get());
+                        output.accept(ModIngredients.QUESO.get());
                     })
                     .build());
 

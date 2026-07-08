@@ -1,5 +1,3 @@
-import org.gradle.api.tasks.JavaExec
-
 plugins {
     id 'java'
     id 'eclipse'
@@ -50,14 +48,47 @@ minecraft {
                 }
             }
         }
+
+        data {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            mods {
+                "${mod_id}" {
+                    source sourceSets.main
+                }
+            }
+        }
     }
 }
 
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
+}
+
 repositories {
+    // JEI
+    maven { url = 'https://maven.blamejared.com' }
+    // EMI
+    maven { url = 'https://maven.terraformersmc.com/releases' }
+    // Jade (published on Modrinth's maven; no dedicated api jar, only the full mod jar)
+    maven { url = 'https://api.modrinth.com/maven' }
+    // The One Probe
+    maven { url = 'https://maven.k-4u.nl' }
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-47.2.0"
+
+    // All five are compile-time only: none are bundled, none are required at runtime.
+    // ModCompat gates every call into these APIs behind ModList.get().isLoaded(...), so the
+    // mod runs identically with any subset of them present, absent, or all installed at once.
+    compileOnly "mezz.jei:jei-${minecraft_version}-common-api:15.20.0.133"
+    compileOnly "mezz.jei:jei-${minecraft_version}-forge-api:15.20.0.133"
+    compileOnly "dev.emi:emi-forge:1.1.24+${minecraft_version}:api"
+    compileOnly "maven.modrinth:jade:11.13.2+forge"
+    compileOnly "mcjty.theoneprobe:theoneprobe:${minecraft_version}-10.0.1-3:api"
 }
 
 tasks.withType(ProcessResources).configureEach {

@@ -1,6 +1,9 @@
 package com.voranix.ottoke.common.registration;
 
 import com.voranix.ottoke.OttokeStreetFood;
+import com.voranix.ottoke.common.block.BannerOttokeBlock;
+import com.voranix.ottoke.common.block.CartelLuminosoBlock;
+import com.voranix.ottoke.common.block.MenuBoardBlock;
 import com.voranix.ottoke.common.cooking.FreidoraBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -30,9 +33,16 @@ public final class ModBlocks {
     public static final RegistryObject<Block> BASURERO = registerBlock("basurero",
             () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).strength(1.0f, 2.0f)));
     public static final RegistryObject<Block> MENU = registerBlock("menu",
-            () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_GRAY).strength(0.8f, 2.0f)));
+            () -> new MenuBoardBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_GRAY).strength(0.8f, 2.0f)));
     public static final RegistryObject<Block> CARTEL = registerBlock("cartel",
             () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_GRAY).strength(0.8f, 2.0f)));
+    public static final RegistryObject<Block> BANNER_OTTOKE = registerBlock("banner_ottoke",
+            () -> new BannerOttokeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(1.0f, 2.0f)));
+    public static final RegistryObject<Block> CARTEL_LUMINOSO = registerBlock("cartel_luminoso",
+            () -> new CartelLuminosoBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_LIGHT_GRAY)
+                    .strength(0.8f, 2.0f)
+                    .lightLevel(state -> state.getValue(CartelLuminosoBlock.LIT) ? 15 : 0)));
 
     private ModBlocks() {
     }

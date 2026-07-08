@@ -16,6 +16,7 @@ public final class ModRegistries {
     private static final Registrar[] REGISTRARS = {
             ModBlocks::register,
             ModBlockItems::register,
+            ModIngredients::register,
             ModItems::register,
             ModBlockEntities::register,
             ModMenuTypes::register,
