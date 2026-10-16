@@ -1,5 +1,6 @@
 .gradle/
 build/
+bin/
 run/
 out/
 src/generated/
@@ -7,3 +8,4 @@ src/generated/
 .vscode/
 *.iml
 *.log
+*.jar

@@ -4,31 +4,47 @@ import com.voranix.ottoke.common.cooking.FreidoraMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 /**
- * The Freidora's own GUI - not FurnaceScreen with different numbers. No art texture exists yet (the
- * mod has no image assets at all), so slots are drawn as plain outlined squares and the background
- * is flat fills; swapping in a real texture later only touches {@link #renderBg}, since
- * {@link FreidoraMenu} already owns the actual slot coordinates this class mirrors for rendering.
+ * The Freidora's own GUI. Reuses vanilla's {@code textures/gui/container/furnace.png} directly at
+ * runtime rather than shipping a copy or hand-drawing an equivalent - Forge guarantees the vanilla
+ * resource pack is always present, so referencing it by its vanilla {@link ResourceLocation} is a
+ * normal, standard way to reuse a base-game asset without redistributing it in this mod's jar. It
+ * also means zero new art had to be authored to get a real framed/beveled look, which a hand-drawn
+ * recreation would not have matched pixel-for-pixel anyway.
  * <p>
- * The progress indicator is a vertical bar that fills bottom-to-top between the ingredient and fuel
- * slots, not vanilla's left-to-right arrow - a deliberate difference from the furnace that also
- * reads naturally as "heat rising" for a fryer.
+ * {@link FreidoraMenu}'s three station slots are positioned at furnace.png's own baked-in slot
+ * coordinates (56,17 / 56,53 / 116,35) specifically so the texture's recessed-slot art lines up
+ * exactly with the real interactive slots - this screen does not offset anything relative to the
+ * menu, it trusts the menu's coordinates completely, the same relationship
+ * {@code AbstractFurnaceScreen} has with {@code AbstractFurnaceMenu}.
+ * <p>
+ * The progress arrow reuses furnace.png's own arrow sprite (the same source pixels vanilla's furnace
+ * screen blits) rather than the flat-color vertical bar this screen used before switching to a real
+ * background - a custom color fill would have clashed with the framed/wood-grain look. The flame
+ * icon is also furnace.png's own sprite, but drawn as a simple on/off state (full or absent) instead
+ * of vanilla's gradual burn-down animation: the Freidora charges fuel whole on recipe completion, not
+ * tick-by-tick like a furnace (see {@link FreidoraMenu#hasFuel()}), so there is no "remaining burn
+ * time" fraction to animate honestly - only "is there usable fuel right now".
  */
 public class FreidoraScreen extends AbstractContainerScreen<FreidoraMenu> {
-    private static final int SLOT_SIZE = 18;
-    private static final int INGREDIENT_SLOT_X = 47;
-    private static final int INGREDIENT_SLOT_Y = 24;
-    private static final int FUEL_SLOT_X = 47;
-    private static final int FUEL_SLOT_Y = 52;
-    private static final int RESULT_SLOT_X = 116;
-    private static final int RESULT_SLOT_Y = 38;
+    private static final ResourceLocation TEXTURE = new ResourceLocation("minecraft", "textures/gui/container/furnace.png");
 
-    private static final int PROGRESS_X = 82;
-    private static final int PROGRESS_Y = 22;
-    private static final int PROGRESS_WIDTH = 14;
-    private static final int PROGRESS_HEIGHT = 34;
+    private static final int ARROW_X = 79;
+    private static final int ARROW_Y = 34;
+    private static final int ARROW_U = 176;
+    private static final int ARROW_V = 14;
+    private static final int ARROW_WIDTH = 24;
+    private static final int ARROW_HEIGHT = 16;
+
+    private static final int FLAME_X = 56;
+    private static final int FLAME_Y = 36;
+    private static final int FLAME_U = 176;
+    private static final int FLAME_V = 0;
+    private static final int FLAME_WIDTH = 14;
+    private static final int FLAME_HEIGHT = 14;
 
     public FreidoraScreen(FreidoraMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
@@ -39,19 +55,13 @@ public class FreidoraScreen extends AbstractContainerScreen<FreidoraMenu> {
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
 
-        guiGraphics.fill(x, y, x + this.imageWidth, y + this.imageHeight, 0xFF1A1A1A);
-        guiGraphics.fill(x + 4, y + 4, x + this.imageWidth - 4, y + this.imageHeight - 4, 0xFF2A2A2A);
+        guiGraphics.blit(TEXTURE, x, y, 0, 0, this.imageWidth, this.imageHeight);
 
-        renderSlotOutline(guiGraphics, x, y, INGREDIENT_SLOT_X, INGREDIENT_SLOT_Y);
-        renderSlotOutline(guiGraphics, x, y, FUEL_SLOT_X, FUEL_SLOT_Y);
-        renderSlotOutline(guiGraphics, x, y, RESULT_SLOT_X, RESULT_SLOT_Y);
+        if (this.menu.hasFuel()) {
+            guiGraphics.blit(TEXTURE, x + FLAME_X, y + FLAME_Y, FLAME_U, FLAME_V, FLAME_WIDTH, FLAME_HEIGHT);
+        }
 
-        renderProgressBar(guiGraphics, x, y);
-    }
-
-    private void renderSlotOutline(GuiGraphics guiGraphics, int x, int y, int slotX, int slotY) {
-        guiGraphics.fill(x + slotX - 1, y + slotY - 1, x + slotX + SLOT_SIZE + 1, y + slotY + SLOT_SIZE + 1, 0xFF000000);
-        guiGraphics.fill(x + slotX, y + slotY, x + slotX + SLOT_SIZE, y + slotY + SLOT_SIZE, 0xFF8B8B8B);
+        renderProgressArrow(guiGraphics, x, y);
     }
 
     /**
@@ -60,17 +70,18 @@ public class FreidoraScreen extends AbstractContainerScreen<FreidoraMenu> {
      * own {@code SimpleCookingProcess} instance. No separate network message exists or is needed for
      * this bar; it is exactly what {@code CookingProcess extends ContainerData} was built for.
      */
-    private void renderProgressBar(GuiGraphics guiGraphics, int x, int y) {
-        guiGraphics.fill(x + PROGRESS_X, y + PROGRESS_Y, x + PROGRESS_X + PROGRESS_WIDTH, y + PROGRESS_Y + PROGRESS_HEIGHT, 0xFF0F0F0F);
-
+    private void renderProgressArrow(GuiGraphics guiGraphics, int x, int y) {
         int totalTime = this.menu.getCookingTotalTime();
         if (totalTime <= 0) {
             return;
         }
 
-        int filledHeight = this.menu.getCookingProgress() * PROGRESS_HEIGHT / totalTime;
-        int filledTop = y + PROGRESS_Y + (PROGRESS_HEIGHT - filledHeight);
-        guiGraphics.fill(x + PROGRESS_X, filledTop, x + PROGRESS_X + PROGRESS_WIDTH, y + PROGRESS_Y + PROGRESS_HEIGHT, 0xFFFF6600);
+        int filledWidth = this.menu.getCookingProgress() * ARROW_WIDTH / totalTime;
+        if (filledWidth <= 0) {
+            return;
+        }
+
+        guiGraphics.blit(TEXTURE, x + ARROW_X, y + ARROW_Y, ARROW_U, ARROW_V, filledWidth + 1, ARROW_HEIGHT);
     }
 
     @Override

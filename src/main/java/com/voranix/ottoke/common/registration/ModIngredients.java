@@ -1,8 +1,8 @@
 package com.voranix.ottoke.common.registration;
 
-import com.voranix.ottoke.OttokeStreetFood;
-import com.voranix.ottoke.common.item.IngredientCategory;
-import com.voranix.ottoke.common.item.IngredientItem;
+import com.voranix.voranixmod.VoranixMod;
+import com.voranix.voranixmod.common.item.IngredientCategory;
+import com.voranix.voranixmod.common.item.IngredientItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -22,7 +22,7 @@ import net.minecraftforge.registries.RegistryObject;
  */
 public final class ModIngredients {
     public static final DeferredRegister<Item> INGREDIENTS =
-            DeferredRegister.create(ForgeRegistries.ITEMS, OttokeStreetFood.MODID);
+            DeferredRegister.create(ForgeRegistries.ITEMS, VoranixMod.MODID);
 
     public static final RegistryObject<Item> HARINA = registerIngredient("harina", IngredientCategory.BASE);
     public static final RegistryObject<Item> SAL = registerIngredient("sal", IngredientCategory.BASE);

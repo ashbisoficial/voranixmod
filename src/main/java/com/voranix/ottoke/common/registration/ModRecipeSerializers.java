@@ -1,6 +1,6 @@
 package com.voranix.ottoke.common.registration;
 
-import com.voranix.ottoke.OttokeStreetFood;
+import com.voranix.voranixmod.VoranixMod;
 import com.voranix.ottoke.common.cooking.FreidoraRecipe;
 import com.voranix.ottoke.common.cooking.FreidoraRecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -15,7 +15,7 @@ import net.minecraftforge.registries.RegistryObject;
  */
 public final class ModRecipeSerializers {
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS =
-            DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, OttokeStreetFood.MODID);
+            DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, VoranixMod.MODID);
 
     public static final RegistryObject<RecipeSerializer<FreidoraRecipe>> FREIDORA =
             RECIPE_SERIALIZERS.register("freidora", FreidoraRecipeSerializer::new);

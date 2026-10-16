@@ -1,8 +1,9 @@
 package com.voranix.ottoke.common.cooking;
 
-import com.voranix.ottoke.common.cooking.system.SlotType;
+import com.voranix.voranixmod.common.cooking.system.SlotType;
 import com.voranix.ottoke.common.registration.ModBlocks;
 import com.voranix.ottoke.common.registration.ModMenuTypes;
+import com.voranix.ottoke.common.registration.ModRecipeTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -41,19 +42,19 @@ public class FreidoraMenu extends AbstractContainerMenu {
         this.level = level;
         this.data = blockEntity.getData();
 
-        this.addSlot(new SlotItemHandler(blockEntity.getInventory(), FreidoraBlockEntity.INPUT_SLOT, 47, 24) {
+        this.addSlot(new SlotItemHandler(blockEntity.getInventory(), FreidoraBlockEntity.INPUT_SLOT, 56, 17) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return SlotType.INPUT.allowsExternalInsert();
             }
         });
-        this.addSlot(new SlotItemHandler(blockEntity.getInventory(), FreidoraBlockEntity.FUEL_SLOT, 47, 52) {
+        this.addSlot(new SlotItemHandler(blockEntity.getInventory(), FreidoraBlockEntity.FUEL_SLOT, 56, 53) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return SlotType.FUEL.allowsExternalInsert() && ForgeHooks.getBurnTime(stack, null) > 0;
             }
         });
-        this.addSlot(new SlotItemHandler(blockEntity.getInventory(), FreidoraBlockEntity.OUTPUT_SLOT, 116, 38) {
+        this.addSlot(new SlotItemHandler(blockEntity.getInventory(), FreidoraBlockEntity.OUTPUT_SLOT, 116, 35) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return SlotType.OUTPUT.allowsExternalInsert();
@@ -117,5 +118,51 @@ public class FreidoraMenu extends AbstractContainerMenu {
 
     public int getCookingTotalTime() {
         return this.data.get(1);
+    }
+
+    /**
+     * Whether the fuel slot currently holds enough of a genuinely burnable item to pay for whatever
+     * recipe the ingredient slot currently matches. Unlike a vanilla furnace, fuel here is charged
+     * whole on recipe completion rather than ticked down over time (see
+     * {@code FreidoraManager#consumeFuel}) - there is no "burn time remaining" fraction to animate,
+     * so the screen's flame icon is an honest on/off read of this, not a fake gradual meter.
+     * <p>
+     * Checks the matched recipe's own {@code fuelCost}, not just "is this item flammable" - a recipe
+     * charging more than 1 (Banderilla Premium does) would otherwise show a lit flame with only one
+     * fuel item present, while {@code FreidoraManager} silently refuses to start the cook underneath
+     * it: the flame looks ready, nothing happens, and there is no other feedback that more fuel is
+     * needed. Reads the fuel slot's item directly rather than through {@link #data}: slot contents
+     * already replicate to the client via vanilla's standard container sync, so no extra synced
+     * field is needed just for this check.
+     */
+    public boolean hasFuel() {
+        int fuelCost = currentFuelCost();
+        if (fuelCost <= 0) {
+            return true;
+        }
+        ItemStack fuelStack = this.slots.get(FUEL_MENU_SLOT).getItem();
+        if (ForgeHooks.getBurnTime(fuelStack, null) <= 0) {
+            return false;
+        }
+        return fuelStack.getCount() >= fuelCost;
+    }
+
+    /**
+     * The fuel cost of whichever {@code voranixmod:freidora} recipe currently matches the ingredient
+     * slot, or {@code 1} if none does (no recipe, no ingredient) or the level isn't available yet -
+     * the same "at least one genuinely burnable item" threshold {@link #hasFuel()} used before it
+     * became recipe-aware.
+     */
+    private int currentFuelCost() {
+        if (this.level == null) {
+            return 1;
+        }
+        ItemStack ingredientStack = this.slots.get(INGREDIENT_MENU_SLOT).getItem();
+        for (FreidoraRecipe recipe : this.level.getRecipeManager().getAllRecipesFor(ModRecipeTypes.FREIDORA.get())) {
+            if (recipe.getIngredient().test(ingredientStack)) {
+                return recipe.getCookingResult().fuelCost();
+            }
+        }
+        return 1;
     }
 }

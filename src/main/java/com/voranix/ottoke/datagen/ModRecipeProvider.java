@@ -1,6 +1,6 @@
 package com.voranix.ottoke.datagen;
 
-import com.voranix.ottoke.OttokeStreetFood;
+import com.voranix.voranixmod.VoranixMod;
 import com.voranix.ottoke.common.cooking.FreidoraRecipeBuilder;
 import com.voranix.ottoke.common.registration.ModBlocks;
 import com.voranix.ottoke.common.registration.ModIngredients;
@@ -58,8 +58,15 @@ public final class ModRecipeProvider extends RecipeProvider {
         super(output);
     }
 
+    /**
+     * {@code public}, not the usual {@code protected} override: {@code RecipeProvider#getName()} is
+     * {@code final} ({@code "Recipes"}, no per-modid variation), so this class can no longer be
+     * registered as its own top-level provider now that Mai Pizza also has recipes - see
+     * {@code com.voranix.voranixmod.datagen.ModRecipeProvider}, which constructs an instance of this
+     * class and calls this method directly instead.
+     */
     @Override
-    protected void buildRecipes(Consumer<FinishedRecipe> writer) {
+    public void buildRecipes(Consumer<FinishedRecipe> writer) {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModIngredients.HARINA.get())
                 .requires(Items.WHEAT)
                 .unlockedBy("has_wheat", has(Items.WHEAT))
@@ -204,27 +211,12 @@ public final class ModRecipeProvider extends RecipeProvider {
 
         // Decorative/functional blocks: cheap, single-material conversions matching what each
         // block already visually represents.
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.CAJA_OTTOKE.get())
-                .requires(Items.OAK_PLANKS, 4)
-                .unlockedBy("has_oak_planks", has(Items.OAK_PLANKS))
-                .save(writer, id("caja_ottoke"));
-
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.MOSTRADOR.get())
-                .requires(Items.OAK_PLANKS, 3)
-                .unlockedBy("has_oak_planks", has(Items.OAK_PLANKS))
-                .save(writer, id("mostrador"));
-
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.CAJA_REGISTRADORA.get())
-                .requires(Items.IRON_INGOT, 2)
-                .requires(Items.OAK_PLANKS)
-                .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
-                .save(writer, id("caja_registradora"));
-
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.BASURERO.get())
-                .requires(Items.COBBLESTONE, 3)
-                .unlockedBy("has_cobblestone", has(Items.COBBLESTONE))
-                .save(writer, id("basurero"));
-
+        //
+        // CAJA_OTTOKE, MOSTRADOR, CAJA_REGISTRADORA and BASURERO deliberately have no recipe here -
+        // see the comment next to their registration in ModBlocks. They have no real 3D model yet and
+        // are hidden from the creative tab for that reason; leaving a recipe in would still let
+        // players craft the block/stone placeholder in survival, which defeats hiding them. Add their
+        // recipe back here once they have a real model.
         ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModBlocks.MENU.get())
                 .requires(Items.OAK_PLANKS)
                 .requires(Items.PAPER)
@@ -259,7 +251,7 @@ public final class ModRecipeProvider extends RecipeProvider {
                 new ModLoadedCondition("farmersdelight"));
 
         ExternalItemShapelessRecipe.saveConditional(writer, id("salchicha_from_farmers_delight_bacon"),
-                List.of("farmersdelight:cooked_bacon", "ottoke:sal"),
+                List.of("farmersdelight:cooked_bacon", VoranixMod.MODID + ":sal"),
                 new ItemStack(ModIngredients.SALCHICHA.get()),
                 new ModLoadedCondition("farmersdelight"));
 
@@ -280,6 +272,6 @@ public final class ModRecipeProvider extends RecipeProvider {
     }
 
     private static ResourceLocation id(String path) {
-        return new ResourceLocation(OttokeStreetFood.MODID, path);
+        return new ResourceLocation(VoranixMod.MODID, path);
     }
 }

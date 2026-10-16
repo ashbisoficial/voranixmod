@@ -1,6 +1,6 @@
 package com.voranix.ottoke.common.registration;
 
-import com.voranix.ottoke.OttokeStreetFood;
+import com.voranix.voranixmod.VoranixMod;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -13,7 +13,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 public final class ModSounds {
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS =
-            DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, OttokeStreetFood.MODID);
+            DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, VoranixMod.MODID);
 
     private ModSounds() {
     }

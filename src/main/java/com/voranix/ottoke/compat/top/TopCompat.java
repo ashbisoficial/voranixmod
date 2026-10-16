@@ -1,8 +1,8 @@
 package com.voranix.ottoke.compat.top;
 
-import com.voranix.ottoke.OttokeStreetFood;
+import com.voranix.voranixmod.VoranixMod;
 import com.voranix.ottoke.common.cooking.FreidoraBlockEntity;
-import com.voranix.ottoke.common.cooking.system.CookingProcess;
+import com.voranix.voranixmod.common.cooking.system.CookingProcess;
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.IProbeInfoProvider;
@@ -42,7 +42,7 @@ public final class TopCompat {
     }
 
     private static final class FreidoraProbeInfoProvider implements IProbeInfoProvider {
-        private static final ResourceLocation ID = new ResourceLocation(OttokeStreetFood.MODID, "freidora");
+        private static final ResourceLocation ID = new ResourceLocation(VoranixMod.MODID, "freidora");
 
         @Override
         public ResourceLocation getID() {

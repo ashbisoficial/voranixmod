@@ -1,6 +1,6 @@
 package com.voranix.ottoke.common.registration;
 
-import com.voranix.ottoke.OttokeStreetFood;
+import com.voranix.voranixmod.VoranixMod;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -13,7 +13,7 @@ import net.minecraftforge.registries.RegisterEvent;
 
 public final class ModCreativeTabs {
     public static final DeferredRegister<CreativeModeTab> TABS =
-            DeferredRegister.create(Registries.CREATIVE_MODE_TAB, OttokeStreetFood.MODID);
+            DeferredRegister.create(Registries.CREATIVE_MODE_TAB, VoranixMod.MODID);
 
     public static final RegistryObject<CreativeModeTab> OTTOKE_TAB = TABS.register("ottoke_tab",
             () -> CreativeModeTab.builder()
@@ -21,10 +21,8 @@ public final class ModCreativeTabs {
                     .icon(() -> new ItemStack(ModItems.BANDERILLA_CRUDA.get()))
                     .displayItems((parameters, output) -> {
                         output.accept(ModBlocks.FREIDORA.get());
-                        output.accept(ModBlocks.CAJA_OTTOKE.get());
-                        output.accept(ModBlocks.MOSTRADOR.get());
-                        output.accept(ModBlocks.CAJA_REGISTRADORA.get());
-                        output.accept(ModBlocks.BASURERO.get());
+                        // CAJA_OTTOKE, MOSTRADOR, CAJA_REGISTRADORA, BASURERO deliberately omitted -
+                        // see the comment next to them in ModBlocks for why.
                         output.accept(ModBlocks.MENU.get());
                         output.accept(ModBlocks.CARTEL.get());
                         output.accept(ModBlocks.BANNER_OTTOKE.get());
@@ -41,8 +39,9 @@ public final class ModCreativeTabs {
                         output.accept(ModItems.BANDERILLA_PREMIUM.get());
                         output.accept(ModItems.COLA_OTTOKE.get());
                         output.accept(ModItems.TE_DURAZNO.get());
-                        output.accept(ModItems.SODA_UVA.get());
-                        output.accept(ModItems.AGUA_MINERAL.get());
+                        output.accept(ModItems.LIMON_OTTOKE.get());
+                        output.accept(ModItems.NARANJA_OTTOKE.get());
+                        output.accept(ModItems.GINGER_OTTOKE.get());
                         output.accept(ModIngredients.HARINA.get());
                         output.accept(ModIngredients.SAL.get());
                         output.accept(ModIngredients.AZUCAR.get());
@@ -53,6 +52,7 @@ public final class ModCreativeTabs {
                         output.accept(ModIngredients.MASA.get());
                         output.accept(ModIngredients.EMPANIZADO.get());
                         output.accept(ModIngredients.QUESO.get());
+                        output.accept(ModItems.HUEVO_OTTOKE.get());
                     })
                     .build());
 

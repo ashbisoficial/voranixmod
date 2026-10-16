@@ -1,6 +1,6 @@
 package com.voranix.ottoke.datagen;
 
-import com.voranix.ottoke.OttokeStreetFood;
+import com.voranix.voranixmod.VoranixMod;
 import com.voranix.ottoke.common.registration.ModIngredients;
 import com.voranix.ottoke.common.registration.ModItems;
 import net.minecraft.data.PackOutput;
@@ -15,32 +15,34 @@ import net.minecraftforge.registries.RegistryObject;
  * {@link ModBlockStateProvider}, which already owns the block model they parent from - duplicating
  * that link here would mean two providers to update whenever a block's model changes.
  * <p>
- * Textures are temporary vanilla placeholders (no custom art exists yet). Salchicha and Empanizado
- * previously had no model at all (missing-texture in game); this fills that gap rather than leaving
- * it broken after the migration.
+ * Every Banderilla (raw and finished) and every drink uses real art (see {@code textures/item/});
+ * the {@link ModIngredients} entries are still temporary vanilla placeholders pending real art.
+ * Salchicha and Empanizado previously had no model at all (missing-texture in game); this fills that
+ * gap rather than leaving it broken after the migration.
  */
 public final class ModItemModelProvider extends ItemModelProvider {
     public ModItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
-        super(output, OttokeStreetFood.MODID, existingFileHelper);
+        super(output, VoranixMod.MODID, existingFileHelper);
     }
 
     @Override
     protected void registerModels() {
-        flatItem(ModItems.BANDERILLA_CRUDA, mcLoc("item/iron_nugget"));
-        flatItem(ModItems.BANDERILLA_CLASICA, mcLoc("item/stick"));
-        flatItem(ModItems.COLA_OTTOKE, mcLoc("item/experience_bottle"));
-        flatItem(ModItems.TE_DURAZNO, mcLoc("item/glow_berries"));
-        flatItem(ModItems.SODA_UVA, mcLoc("item/purple_dye"));
-        flatItem(ModItems.AGUA_MINERAL, mcLoc("item/diamond"));
+        flatItem(ModItems.BANDERILLA_CRUDA, modLoc("item/banderilla_cruda"));
+        flatItem(ModItems.BANDERILLA_CLASICA, modLoc("item/banderilla_clasica"));
+        flatItem(ModItems.COLA_OTTOKE, modLoc("item/cola_ottoke"));
+        flatItem(ModItems.TE_DURAZNO, modLoc("item/te_durazno"));
+        flatItem(ModItems.LIMON_OTTOKE, modLoc("item/limon_ottoke"));
+        flatItem(ModItems.NARANJA_OTTOKE, modLoc("item/naranja_ottoke"));
+        flatItem(ModItems.GINGER_OTTOKE, modLoc("item/ginger_ottoke"));
 
-        flatItem(ModItems.BANDERILLA_PAPA_CRUDA, mcLoc("item/potato"));
-        flatItem(ModItems.BANDERILLA_PAPA, mcLoc("item/baked_potato"));
-        flatItem(ModItems.BANDERILLA_PICANTE_CRUDA, mcLoc("item/redstone"));
-        flatItem(ModItems.BANDERILLA_PICANTE, mcLoc("item/cooked_rabbit"));
-        flatItem(ModItems.BANDERILLA_MOZZARELLA_CRUDA, mcLoc("item/egg"));
-        flatItem(ModItems.BANDERILLA_MOZZARELLA, mcLoc("item/cooked_chicken"));
-        flatItem(ModItems.BANDERILLA_PREMIUM_CRUDA, mcLoc("item/raw_gold"));
-        flatItem(ModItems.BANDERILLA_PREMIUM, mcLoc("item/golden_carrot"));
+        flatItem(ModItems.BANDERILLA_PAPA_CRUDA, modLoc("item/banderilla_papa_cruda"));
+        flatItem(ModItems.BANDERILLA_PAPA, modLoc("item/banderilla_papa"));
+        flatItem(ModItems.BANDERILLA_PICANTE_CRUDA, modLoc("item/banderilla_picante_cruda"));
+        flatItem(ModItems.BANDERILLA_PICANTE, modLoc("item/banderilla_picante"));
+        flatItem(ModItems.BANDERILLA_MOZZARELLA_CRUDA, modLoc("item/banderilla_mozzarella_cruda"));
+        flatItem(ModItems.BANDERILLA_MOZZARELLA, modLoc("item/banderilla_mozzarella"));
+        flatItem(ModItems.BANDERILLA_PREMIUM_CRUDA, modLoc("item/banderilla_premium_cruda"));
+        flatItem(ModItems.BANDERILLA_PREMIUM, modLoc("item/banderilla_premium"));
 
         flatItem(ModIngredients.HARINA, mcLoc("item/bone_meal"));
         flatItem(ModIngredients.SAL, mcLoc("item/quartz"));
@@ -52,6 +54,8 @@ public final class ModItemModelProvider extends ItemModelProvider {
         flatItem(ModIngredients.MASA, mcLoc("item/wheat"));
         flatItem(ModIngredients.EMPANIZADO, mcLoc("item/bread"));
         flatItem(ModIngredients.QUESO, mcLoc("item/glowstone_dust"));
+
+        flatItem(ModItems.HUEVO_OTTOKE, modLoc("item/huevo_ottoke"));
     }
 
     private ItemModelBuilder flatItem(RegistryObject<?> item, ResourceLocation texture) {

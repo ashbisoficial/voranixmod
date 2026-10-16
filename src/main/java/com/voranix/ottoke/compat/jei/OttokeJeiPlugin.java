@@ -1,6 +1,6 @@
 package com.voranix.ottoke.compat.jei;
 
-import com.voranix.ottoke.OttokeStreetFood;
+import com.voranix.voranixmod.VoranixMod;
 import com.voranix.ottoke.common.cooking.FreidoraRecipe;
 import com.voranix.ottoke.common.registration.ModBlocks;
 import com.voranix.ottoke.common.registration.ModRecipeTypes;
@@ -24,7 +24,7 @@ import java.util.List;
  */
 @JeiPlugin
 public final class OttokeJeiPlugin implements IModPlugin {
-    private static final ResourceLocation UID = new ResourceLocation(OttokeStreetFood.MODID, "jei_plugin");
+    private static final ResourceLocation UID = new ResourceLocation(VoranixMod.MODID, "jei_plugin");
 
     @Override
     public ResourceLocation getPluginUid() {

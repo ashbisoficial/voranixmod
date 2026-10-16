@@ -18,7 +18,7 @@ import java.util.function.Consumer;
  * the rest are fluent setters so a recipe that doesn't need them doesn't have to mention them -
  * generated JSON stays as minimal as a hand-written one.
  * <p>
- * serializeAdvancement()/getAdvancementId() return null on purpose: the "ottoke:freidora" recipe
+ * serializeAdvancement()/getAdvancementId() return null on purpose: the "voranixmod:freidora" recipe
  * type has no registered RecipeBookCategory, so a recipe-book unlock advancement would exist only
  * to unlock an entry that never renders anywhere.
  */

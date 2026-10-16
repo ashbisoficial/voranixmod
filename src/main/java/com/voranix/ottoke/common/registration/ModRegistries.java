@@ -3,9 +3,9 @@ package com.voranix.ottoke.common.registration;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 /**
- * Single entry point the main mod class calls during construction. Adding a tenth registry
- * category in a future version means adding one line to {@link #REGISTRARS} here -
- * {@link com.voranix.ottoke.OttokeStreetFood} never has to change.
+ * Single entry point {@link com.voranix.ottoke.OttokeModule#init} calls during module init. Adding
+ * a tenth registry category in a future version means adding one line to {@link #REGISTRARS} here -
+ * {@link com.voranix.ottoke.OttokeModule} never has to change.
  * <p>
  * The array order documents each category's logical dependency on the previous ones
  * (BlockItems reference Blocks, RecipeTypes/Serializers are looked up by cooking logic, etc.).

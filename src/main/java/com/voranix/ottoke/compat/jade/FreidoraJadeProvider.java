@@ -1,8 +1,8 @@
 package com.voranix.ottoke.compat.jade;
 
-import com.voranix.ottoke.OttokeStreetFood;
+import com.voranix.voranixmod.VoranixMod;
 import com.voranix.ottoke.common.cooking.FreidoraBlockEntity;
-import com.voranix.ottoke.common.cooking.system.CookingProcess;
+import com.voranix.voranixmod.common.cooking.system.CookingProcess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -26,7 +26,7 @@ import snownee.jade.api.ui.IElementHelper;
 public final class FreidoraJadeProvider implements IBlockComponentProvider, IServerDataProvider<BlockAccessor> {
     public static final FreidoraJadeProvider INSTANCE = new FreidoraJadeProvider();
 
-    private static final ResourceLocation UID = new ResourceLocation(OttokeStreetFood.MODID, "freidora");
+    private static final ResourceLocation UID = new ResourceLocation(VoranixMod.MODID, "freidora");
     private static final String TAG_PROGRESS = "Progress";
     private static final String TAG_TOTAL_TIME = "TotalTime";
 

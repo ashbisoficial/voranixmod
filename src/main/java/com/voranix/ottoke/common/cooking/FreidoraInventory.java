@@ -1,8 +1,8 @@
 package com.voranix.ottoke.common.cooking;
 
-import com.voranix.ottoke.common.cooking.system.CookingContainer;
-import com.voranix.ottoke.common.cooking.system.SlotLayout;
-import com.voranix.ottoke.common.cooking.system.SlotType;
+import com.voranix.voranixmod.common.cooking.system.CookingContainer;
+import com.voranix.voranixmod.common.cooking.system.SlotLayout;
+import com.voranix.voranixmod.common.cooking.system.SlotType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
@@ -11,7 +11,7 @@ import net.minecraftforge.items.IItemHandlerModifiable;
  * a {@link SlotLayout} instead of raw indices scattered across the class.
  * <p>
  * Implements {@link CookingContainer} so {@code FreidoraManager} (via the inherited
- * {@link com.voranix.ottoke.common.cooking.system.AbstractCookingManager}) can drive it generically,
+ * {@link com.voranix.voranixmod.common.cooking.system.AbstractCookingManager}) can drive it generically,
  * but also exposes the fuel slot directly as its own methods - fuel has no place in
  * {@code CookingContainer}'s generic contract (see {@code AbstractCookingManager#hasFuel}), so the
  * one manager that actually needs it reaches for this concrete type instead.

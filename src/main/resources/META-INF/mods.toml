@@ -7,7 +7,8 @@ modId="${mod_id}"
 version="${mod_version}"
 displayName="${mod_name}"
 authors="Voranix"
-description='A professional starter mod for Ottoke Street Food.'
+description='''VoranixMod: a single installable mod bundling Voranix's own content modules under one jar and one modid. Currently ships the Ottoke Street Food module (cooking/food content), the Voranix Coins module (currency items), and the Mai Pizza module (pizza chain content).'''
+logoFile="voranix_logo.png"
 
 [[dependencies.${mod_id}]]
 modId="forge"

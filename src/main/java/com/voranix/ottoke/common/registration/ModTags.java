@@ -1,6 +1,6 @@
 package com.voranix.ottoke.common.registration;
 
-import com.voranix.ottoke.OttokeStreetFood;
+import com.voranix.voranixmod.VoranixMod;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -8,7 +8,7 @@ import net.minecraft.world.item.Item;
 
 /**
  * Every {@link TagKey} the mod either consumes (as a recipe ingredient) or contributes its own
- * items to. Recipes should reference these constants instead of a specific {@code ottoke:} or
+ * items to. Recipes should reference these constants instead of a specific {@code voranixmod:} or
  * other mod's item id wherever an ingredient represents a category (a sausage, milk, flour) rather
  * than one exact item - that is what lets another mod's equivalent item work in an Ottoke recipe,
  * and an Ottoke ingredient work in another mod's recipe, without either mod knowing about the other.
@@ -61,7 +61,7 @@ public final class ModTags {
         }
 
         private static TagKey<Item> ottoke(String path) {
-            return ItemTags.create(new ResourceLocation(OttokeStreetFood.MODID, path));
+            return ItemTags.create(new ResourceLocation(VoranixMod.MODID, path));
         }
     }
 }

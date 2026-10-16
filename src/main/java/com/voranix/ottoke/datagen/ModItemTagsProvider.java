@@ -1,6 +1,6 @@
 package com.voranix.ottoke.datagen;
 
-import com.voranix.ottoke.OttokeStreetFood;
+import com.voranix.voranixmod.VoranixMod;
 import com.voranix.ottoke.common.registration.ModIngredients;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -28,7 +28,7 @@ public final class ModItemTagsProvider extends ItemTagsProvider {
     public ModItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider,
                                 ExistingFileHelper existingFileHelper) {
         super(output, lookupProvider, CompletableFuture.completedFuture(TagsProvider.TagLookup.empty()),
-                OttokeStreetFood.MODID, existingFileHelper);
+                VoranixMod.MODID, existingFileHelper);
     }
 
     @Override

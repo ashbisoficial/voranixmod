@@ -1,6 +1,7 @@
 package com.voranix.ottoke.common.cooking;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -8,25 +9,87 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.network.NetworkHooks;
 
 public class FreidoraBlock extends BaseEntityBlock {
+    /**
+     * Mirrors {@code CartelLuminosoBlock}'s {@code LIT} pattern, but with no toggle - only
+     * {@link FreidoraBlockEntity#serverTick} ever changes it, flipping it to match
+     * {@code CookingProcess#isActive()} exactly when a cook starts or stops. Light emission is wired
+     * to it below via {@code lightLevel}, the same way Cartel Luminoso wires its own light to
+     * {@code LIT} in {@code ModBlocks}.
+     */
+    public static final BooleanProperty COOKING = BooleanProperty.create("cooking");
+
+    /**
+     * Same {@code HORIZONTAL_FACING} rotate-on-placement behavior as {@code HorizontalPanelBlock} -
+     * duplicated here rather than shared through it, because Java has no multiple inheritance and
+     * this block already extends {@code BaseEntityBlock} for its {@link FreidoraBlockEntity}, which
+     * {@code HorizontalPanelBlock} (a plain {@code Block}) can't also be.
+     */
+    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+
     public FreidoraBlock() {
-        super(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(2.0f, 6.0f));
+        super(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(2.0f, 6.0f).noOcclusion()
+                .lightLevel(state -> state.getValue(COOKING) ? 13 : 0));
+        this.registerDefaultState(this.stateDefinition.any().setValue(COOKING, false).setValue(FACING, Direction.NORTH));
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(COOKING).add(FACING);
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+    }
+
+    @Override
+    public BlockState rotate(BlockState state, Rotation rotation) {
+        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
+    }
+
+    @Override
+    public BlockState mirror(BlockState state, Mirror mirror) {
+        return state.rotate(mirror.getRotation(state.getValue(FACING)));
     }
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new FreidoraBlockEntity(pos, state);
+    }
+
+    /**
+     * {@code BaseEntityBlock}'s own default is {@code RenderShape.INVISIBLE} - it assumes a block
+     * entity normally means the block is rendered entirely by a {@code BlockEntityRenderer}, the way
+     * a chest or banner is. The Freidora has no BER; its entire visual is the JSON model wired in
+     * {@code ModBlockStateProvider}. Leaving the inherited default meant the placed block never drew
+     * anything (its item form still rendered fine, since item rendering goes through the model
+     * system directly and never calls this method at all) - this override is what makes the model
+     * actually appear once placed.
+     */
+    @Override
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
     }
 
     @Override

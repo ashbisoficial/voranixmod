@@ -1,6 +1,6 @@
 package com.voranix.ottoke.common.registration;
 
-import com.voranix.ottoke.OttokeStreetFood;
+import com.voranix.voranixmod.VoranixMod;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -20,7 +20,7 @@ import net.minecraftforge.registries.RegistryObject;
  */
 public final class ModBlockItems {
     public static final DeferredRegister<Item> BLOCK_ITEMS =
-            DeferredRegister.create(ForgeRegistries.ITEMS, OttokeStreetFood.MODID);
+            DeferredRegister.create(ForgeRegistries.ITEMS, VoranixMod.MODID);
 
     public static final RegistryObject<Item> FREIDORA = registerBlockItem(ModBlocks.FREIDORA);
     public static final RegistryObject<Item> CAJA_OTTOKE = registerBlockItem(ModBlocks.CAJA_OTTOKE);

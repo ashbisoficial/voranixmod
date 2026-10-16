@@ -1,8 +1,8 @@
 package com.voranix.ottoke.common.cooking;
 
-import com.voranix.ottoke.common.cooking.system.AbstractCookingManager;
-import com.voranix.ottoke.common.cooking.system.CookingContainer;
-import com.voranix.ottoke.common.cooking.system.CookingRecipe;
+import com.voranix.voranixmod.common.cooking.system.AbstractCookingManager;
+import com.voranix.voranixmod.common.cooking.system.CookingContainer;
+import com.voranix.voranixmod.common.cooking.system.CookingRecipe;
 import com.voranix.ottoke.common.registration.ModRecipeTypes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -35,7 +35,7 @@ import java.util.Optional;
  * depends only on the {@link CookingContainer}/{@link CookingRecipe} passed in, never on a field
  * that varies per station - so every {@code FreidoraBlockEntity} in a world shares the same manager
  * instead of each allocating its own. The one field this class does carry ({@link #cachedRecipes})
- * is a cache of world-global data (every registered {@code ottoke:freidora} recipe), identical for
+ * is a cache of world-global data (every registered {@code voranixmod:freidora} recipe), identical for
  * every station and every caller, not per-station state - see {@link #findMatchingRecipe}.
  */
 public class FreidoraManager extends AbstractCookingManager {
@@ -54,7 +54,7 @@ public class FreidoraManager extends AbstractCookingManager {
     private List<FreidoraRecipe> cachedRecipes = List.of();
 
     /**
-     * Buscar receta: every {@code FreidoraRecipe} registered under {@code ottoke:freidora} is a
+     * Buscar receta: every {@code FreidoraRecipe} registered under {@code voranixmod:freidora} is a
      * candidate; the first one whose ingredient matches wins. A plain indexed loop instead of a
      * {@code Stream} pipeline - the stream/lambda/Optional-boxing machinery would otherwise be rebuilt
      * every tick for what is, at most, a handful of recipes to check.

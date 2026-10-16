@@ -1,8 +1,8 @@
 package com.voranix.ottoke.common.cooking;
 
-import com.voranix.ottoke.common.cooking.system.AbstractCookingRecipe;
-import com.voranix.ottoke.common.cooking.system.CookingContainer;
-import com.voranix.ottoke.common.cooking.system.CookingResult;
+import com.voranix.voranixmod.common.cooking.system.AbstractCookingRecipe;
+import com.voranix.voranixmod.common.cooking.system.CookingContainer;
+import com.voranix.voranixmod.common.cooking.system.CookingResult;
 import com.voranix.ottoke.common.registration.ModRecipeSerializers;
 import com.voranix.ottoke.common.registration.ModRecipeTypes;
 import net.minecraft.resources.ResourceLocation;

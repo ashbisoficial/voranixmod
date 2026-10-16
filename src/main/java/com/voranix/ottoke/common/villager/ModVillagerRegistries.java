@@ -1,6 +1,6 @@
 package com.voranix.ottoke.common.villager;
 
-import com.voranix.ottoke.OttokeStreetFood;
+import com.voranix.voranixmod.VoranixMod;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -9,10 +9,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public final class ModVillagerRegistries {
     public static final DeferredRegister<PoiType> POI_TYPES =
-            DeferredRegister.create(ForgeRegistries.POI_TYPES, OttokeStreetFood.MODID);
+            DeferredRegister.create(ForgeRegistries.POI_TYPES, VoranixMod.MODID);
 
     public static final DeferredRegister<VillagerProfession> VILLAGER_PROFESSIONS =
-            DeferredRegister.create(ForgeRegistries.VILLAGER_PROFESSIONS, OttokeStreetFood.MODID);
+            DeferredRegister.create(ForgeRegistries.VILLAGER_PROFESSIONS, VoranixMod.MODID);
 
     private ModVillagerRegistries() {
     }

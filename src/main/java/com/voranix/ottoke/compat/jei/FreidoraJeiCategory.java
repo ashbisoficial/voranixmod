@@ -1,6 +1,6 @@
 package com.voranix.ottoke.compat.jei;
 
-import com.voranix.ottoke.OttokeStreetFood;
+import com.voranix.voranixmod.VoranixMod;
 import com.voranix.ottoke.common.cooking.FreidoraRecipe;
 import com.voranix.ottoke.common.registration.ModBlocks;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -25,7 +25,7 @@ import net.minecraft.world.item.ItemStack;
  */
 final class FreidoraJeiCategory implements IRecipeCategory<FreidoraRecipe> {
     static final RecipeType<FreidoraRecipe> TYPE =
-            RecipeType.create(OttokeStreetFood.MODID, "freidora", FreidoraRecipe.class);
+            RecipeType.create(VoranixMod.MODID, "freidora", FreidoraRecipe.class);
 
     private static final int WIDTH = 82;
     private static final int HEIGHT = 26;

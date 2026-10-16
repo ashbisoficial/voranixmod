@@ -1,10 +1,19 @@
 package com.voranix.ottoke.common.item;
 
+import com.voranix.voranixmod.common.item.FoodDefinition;
+import com.voranix.voranixmod.common.item.FoodEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.level.Level;
+import net.minecraft.network.chat.Component;
 
+import javax.annotation.Nullable;
+import java.util.List;
 import java.util.function.Supplier;
 
 /**
@@ -48,5 +57,24 @@ public class OttokeFoodItem extends Item {
     @Override
     public FoodProperties getFoodProperties(ItemStack stack, LivingEntity entity) {
         return this.definition.get().toFoodProperties();
+    }
+
+    /**
+     * Reuses {@link PotionUtils#addPotionTooltip} - the same formatting vanilla's own Suspicious Stew
+     * uses - instead of hand-rolling tick-to-"m:ss" conversion: it already renders "Name (m:ss)" (or
+     * "Name II (m:ss)" past amplifier 0), colored per effect category, from a plain
+     * {@code List<MobEffectInstance>}. Skipped entirely when this food has no {@link FoodEffect}s
+     * (Clasica, Papa) - {@code addPotionTooltip} would otherwise add its own "No Effects" line, which
+     * these foods never showed before and shouldn't start showing now.
+     */
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+        super.appendHoverText(stack, level, tooltip, flag);
+        List<FoodEffect> effects = this.definition.get().effects();
+        if (effects.isEmpty()) {
+            return;
+        }
+        List<MobEffectInstance> instances = effects.stream().map(FoodEffect::effect).map(Supplier::get).toList();
+        PotionUtils.addPotionTooltip(instances, tooltip, 1.0F);
     }
 }

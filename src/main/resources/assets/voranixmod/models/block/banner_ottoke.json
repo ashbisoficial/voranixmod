@@ -1,0 +1,82 @@
+{
+  "display": {
+    "gui": {
+      "scale": [0.5, 0.5, 0.5]
+    }
+  },
+  "textures": {
+    "main": "voranixmod:block/banner_ottoke",
+    "edge": "voranixmod:block/banner_ottoke_edge",
+    "particle": "voranixmod:block/banner_ottoke"
+  },
+  "elements": [
+    {
+      "from": [
+        -16,
+        0,
+        14
+      ],
+      "to": [
+        32,
+        24,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0.1797,
+            16,
+            16
+          ],
+          "texture": "#main"
+        },
+        "east": {
+          "uv": [
+            6,
+            0.25,
+            6.25,
+            3.25
+          ],
+          "texture": "#edge"
+        },
+        "south": {
+          "uv": [
+            0,
+            0.1328,
+            16,
+            15.9141
+          ],
+          "texture": "#main"
+        },
+        "west": {
+          "uv": [
+            6,
+            3.25,
+            6.25,
+            6.25
+          ],
+          "texture": "#edge"
+        },
+        "up": {
+          "uv": [
+            6,
+            6.25,
+            0,
+            6
+          ],
+          "texture": "#edge"
+        },
+        "down": {
+          "uv": [
+            12,
+            0,
+            6,
+            0.25
+          ],
+          "texture": "#edge"
+        }
+      }
+    }
+  ]
+}

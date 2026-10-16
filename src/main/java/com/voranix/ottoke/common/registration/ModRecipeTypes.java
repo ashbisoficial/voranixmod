@@ -1,6 +1,6 @@
 package com.voranix.ottoke.common.registration;
 
-import com.voranix.ottoke.OttokeStreetFood;
+import com.voranix.voranixmod.VoranixMod;
 import com.voranix.ottoke.common.cooking.FreidoraRecipe;
 import com.voranix.ottoke.common.cooking.FreidoraRecipeType;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -16,7 +16,7 @@ import net.minecraftforge.registries.RegistryObject;
  */
 public final class ModRecipeTypes {
     public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES =
-            DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, OttokeStreetFood.MODID);
+            DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, VoranixMod.MODID);
 
     public static final RegistryObject<RecipeType<FreidoraRecipe>> FREIDORA =
             RECIPE_TYPES.register("freidora", () -> FreidoraRecipeType.INSTANCE);

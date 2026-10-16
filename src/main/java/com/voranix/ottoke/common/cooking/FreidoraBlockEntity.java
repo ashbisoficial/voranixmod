@@ -1,11 +1,11 @@
 package com.voranix.ottoke.common.cooking;
 
-import com.voranix.ottoke.common.cooking.system.AbstractCookingBlockEntity;
-import com.voranix.ottoke.common.cooking.system.AbstractCookingManager;
-import com.voranix.ottoke.common.cooking.system.CookingContainer;
-import com.voranix.ottoke.common.cooking.system.CookingProcess;
-import com.voranix.ottoke.common.cooking.system.SimpleCookingProcess;
-import com.voranix.ottoke.common.cooking.system.SlotType;
+import com.voranix.voranixmod.common.cooking.system.AbstractCookingBlockEntity;
+import com.voranix.voranixmod.common.cooking.system.AbstractCookingManager;
+import com.voranix.voranixmod.common.cooking.system.CookingContainer;
+import com.voranix.voranixmod.common.cooking.system.CookingProcess;
+import com.voranix.voranixmod.common.cooking.system.SimpleCookingProcess;
+import com.voranix.voranixmod.common.cooking.system.SlotType;
 import com.voranix.ottoke.common.registration.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,6 +15,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
@@ -62,6 +64,27 @@ public class FreidoraBlockEntity extends AbstractCookingBlockEntity {
     @Override
     protected LazyOptional<IItemHandler> getItemHandlerCapability(Direction side) {
         return side == null ? this.fullItemHandler : this.directionalItemHandlers.get(side);
+    }
+
+    /**
+     * {@code AbstractCookingManager#tick} (called from {@code super.serverTick}) only knows about
+     * {@link CookingContainer}/{@link CookingProcess}/{@link Level} - deliberately not
+     * {@link BlockPos}/{@link BlockState}, so a future non-block-entity station isn't forced to have
+     * a blockstate at all (see that class's javadoc). Reflecting "is this station actively cooking"
+     * into a real blockstate property is therefore a BlockEntity-specific concern, done here by
+     * comparing {@link CookingProcess#isActive()} before and after the tick and writing
+     * {@link FreidoraBlock#COOKING} only on an actual transition - the same one-block-update-per-
+     * state-change a vanilla furnace does, not a write every tick.
+     */
+    @Override
+    public void serverTick(Level level) {
+        boolean wasActive = this.process.isActive();
+        super.serverTick(level);
+        boolean isActive = this.process.isActive();
+        if (wasActive != isActive) {
+            BlockState state = getBlockState();
+            level.setBlock(getBlockPos(), state.setValue(FreidoraBlock.COOKING, isActive), Block.UPDATE_ALL);
+        }
     }
 
     @Override

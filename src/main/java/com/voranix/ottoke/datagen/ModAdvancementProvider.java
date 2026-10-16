@@ -1,6 +1,6 @@
 package com.voranix.ottoke.datagen;
 
-import com.voranix.ottoke.OttokeStreetFood;
+import com.voranix.voranixmod.VoranixMod;
 import com.voranix.ottoke.common.registration.ModBlocks;
 import com.voranix.ottoke.common.registration.ModItems;
 import net.minecraft.advancements.Advancement;
@@ -128,8 +128,9 @@ public final class ModAdvancementProvider implements ForgeAdvancementProvider.Ad
                 .addCriterion("ate_premium", ConsumeItemTrigger.TriggerInstance.usedItem(ModItems.BANDERILLA_PREMIUM.get()))
                 .addCriterion("drank_cola", ConsumeItemTrigger.TriggerInstance.usedItem(ModItems.COLA_OTTOKE.get()))
                 .addCriterion("drank_te", ConsumeItemTrigger.TriggerInstance.usedItem(ModItems.TE_DURAZNO.get()))
-                .addCriterion("drank_soda", ConsumeItemTrigger.TriggerInstance.usedItem(ModItems.SODA_UVA.get()))
-                .addCriterion("drank_agua", ConsumeItemTrigger.TriggerInstance.usedItem(ModItems.AGUA_MINERAL.get()))
+                .addCriterion("drank_limon", ConsumeItemTrigger.TriggerInstance.usedItem(ModItems.LIMON_OTTOKE.get()))
+                .addCriterion("drank_naranja", ConsumeItemTrigger.TriggerInstance.usedItem(ModItems.NARANJA_OTTOKE.get()))
+                .addCriterion("drank_ginger", ConsumeItemTrigger.TriggerInstance.usedItem(ModItems.GINGER_OTTOKE.get()))
                 .save(writer, id("vip_client"));
 
         Advancement.Builder.advancement()
@@ -166,7 +167,7 @@ public final class ModAdvancementProvider implements ForgeAdvancementProvider.Ad
     }
 
     private static String id(String path) {
-        return OttokeStreetFood.MODID + ":ottoke/" + path;
+        return VoranixMod.MODID + ":ottoke/" + path;
     }
 
     private static Component title(String path) {

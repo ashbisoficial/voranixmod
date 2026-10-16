@@ -26,8 +26,9 @@ Agregar el restaurante Ottoke Street Food con banderillas coreanas, bebidas y un
 ### Bebidas
 - Cola
 - Té de Durazno
-- Soda de Uva
-- Agua Mineral
+- Soda de Limón
+- Soda de Naranja
+- Ginger Ale
 
 ### Bloques
 - Freidora

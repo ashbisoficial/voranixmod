@@ -1,6 +1,6 @@
 package com.voranix.ottoke.compat.emi;
 
-import com.voranix.ottoke.OttokeStreetFood;
+import com.voranix.voranixmod.VoranixMod;
 import com.voranix.ottoke.common.cooking.FreidoraRecipe;
 import com.voranix.ottoke.common.registration.ModBlocks;
 import com.voranix.ottoke.common.registration.ModRecipeTypes;
@@ -24,7 +24,7 @@ import java.util.List;
  */
 public final class OttokeEmiPlugin implements EmiPlugin {
     static final EmiRecipeCategory FREIDORA_CATEGORY = new EmiRecipeCategory(
-            new ResourceLocation(OttokeStreetFood.MODID, "freidora"),
+            new ResourceLocation(VoranixMod.MODID, "freidora"),
             EmiStack.of(ModBlocks.FREIDORA.get()));
 
     @Override

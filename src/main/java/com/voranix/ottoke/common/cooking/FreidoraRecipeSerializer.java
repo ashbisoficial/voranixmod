@@ -2,7 +2,7 @@ package com.voranix.ottoke.common.cooking;
 
 import com.google.gson.JsonObject;
 import com.voranix.ottoke.common.config.OttokeConfig;
-import com.voranix.ottoke.common.cooking.system.CookingResult;
+import com.voranix.voranixmod.common.cooking.system.CookingResult;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -12,7 +12,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 
 /**
- * Reads/writes the {@code ottoke:freidora} recipe format:
+ * Reads/writes the {@code voranixmod:freidora} recipe format:
  * {@code ingredient, result, cookTime, fuelCost, experience, qualityWindow, burnWindow}.
  * Only {@code ingredient}, {@code result}, and {@code cookTime} are required - the rest default to
  * "this mechanic doesn't apply to this recipe" (0 fuel, 0 experience, no quality tolerance, never

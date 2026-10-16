@@ -1,6 +1,6 @@
 package com.voranix.ottoke.common.registration;
 
-import com.voranix.ottoke.OttokeStreetFood;
+import com.voranix.voranixmod.VoranixMod;
 import com.voranix.ottoke.common.cooking.FreidoraMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -15,7 +15,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public final class ModMenuTypes {
     public static final DeferredRegister<MenuType<?>> MENU_TYPES =
-            DeferredRegister.create(ForgeRegistries.MENU_TYPES, OttokeStreetFood.MODID);
+            DeferredRegister.create(ForgeRegistries.MENU_TYPES, VoranixMod.MODID);
 
     public static final RegistryObject<MenuType<FreidoraMenu>> FREIDORA = MENU_TYPES.register("freidora",
             () -> IForgeMenuType.create((containerId, inventory, data) ->

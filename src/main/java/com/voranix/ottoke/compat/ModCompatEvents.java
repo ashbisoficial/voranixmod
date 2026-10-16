@@ -1,6 +1,6 @@
 package com.voranix.ottoke.compat;
 
-import com.voranix.ottoke.OttokeStreetFood;
+import com.voranix.voranixmod.VoranixMod;
 import com.voranix.ottoke.compat.top.TopCompat;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -15,7 +15,7 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
  * it. Skipping the call when TOP isn't installed means {@code TopCompat} is never loaded at all, so
  * its imports never need to exist on the runtime classpath.
  */
-@Mod.EventBusSubscriber(modid = OttokeStreetFood.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = VoranixMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class ModCompatEvents {
     private ModCompatEvents() {
     }
