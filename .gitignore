@@ -9,3 +9,6 @@ src/generated/
 *.iml
 *.log
 *.jar
+gradle-dist/
+jdk17.zip
+gradle-8.10.2-bin.zip
